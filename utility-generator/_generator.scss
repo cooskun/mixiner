@@ -1,0 +1,83 @@
+@mixin generator($prefix, $props, $values, $custom: (), $default: (type: 'number', responsive: false, filter: 1, unit: "px")) {
+  // Placeholders for extra properties
+  $autocount: false !default;
+  $customize: map-merge($default, $custom) !default;
+  $type: map-get($customize, type) !default;
+  $responsive: map-get($customize, responsive) !default;
+  $filter: map-get($customize, filter) !default;
+  $unit: map-get($customize, unit) !default;
+
+  // Activate the counter if values contains "to"
+  @if index($values, "to") != null {
+    $autocount: true;
+  }
+
+  // Counter is active. Make a list of values
+  @if $autocount {
+    // Counter always have to take a seperator to center
+    // The seperator is "to" in that case
+    // Index of "to" is our guide to catching first and last value
+    $index-of-to: index($values, "to");
+    $index-of-first: $index-of-to - 1;
+    $index-of-last: $index-of-to + 1;
+
+    // Gets the values to making all of list
+    $first-number: nth($values, $index-of-first);
+    $last-number: nth($values, $index-of-last);
+
+    // Make the value list empty
+    $values: ();
+
+    // Fills list with counter
+    @for $i from $first-number through $last-number {
+      @if $i%$filter == 0 {
+        $values: append($values, $i);
+      }
+    }
+  }
+
+  // Loop utility values
+  @each $val in $values {
+    $selector: ".#{$prefix}-#{$val}";
+
+    // .property-value { property: value is-important; }
+    #{$selector} {
+      @each $prop in $props {
+        @if $type == 'number' {
+          #{$prop}: #{$val}#{$unit} !important;
+        }
+        @else {
+          #{$prop}: #{$val} !important;
+        }
+      }
+    }
+
+    // If responsive is activated
+    @if $responsive {
+      // Import breakpoint settings object
+      @import '../settings/breakpoints';
+
+      // Loop the Devices obejct and get the device sizes with prefixes
+      @each $device, $breakpoint in $Breakpoints {        
+        @media all and (min-width: $breakpoint) {
+          // .device-prefix-value { property: value is-important; }
+          .#{$device}:#{$prefix}-#{$val} {
+            @each $prop in $props {
+              @if $type != 'number' {
+                $unit: "";          
+              }
+      
+              #{$prop}: #{$val}#{$unit} !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// @include generator(d, display, flex grid block, (type : string))
+// @include generator(d, display, flex grid block, (type : string, responsive: true))
+// @include generator(m, margin, 1 to 10)
+// @include generator(m, margin, 1 to 100, (filter : 10))
+// @include generator(mtb, margin-top margin-bottom, 1 to 100, (filter : 10))

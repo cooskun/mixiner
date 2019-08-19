@@ -1,0 +1,37 @@
+@import '../settings/breakpoints';
+
+@mixin generate-responsive-variation($className) {
+  @at-root {
+    .#{$className} {
+      @content;
+    }
+
+    @media all and (min-width: map-get($Breakpoints, sm)) {
+      .sm-#{$className} {
+        @content;
+      }
+    }
+  
+    @media all and (min-width: map-get($Breakpoints, md)) {
+      .md-#{$className} {
+        @content;
+      }
+    }
+  
+    @media all and (min-width: map-get($Breakpoints, lg)) {
+      .lg-#{$className} {
+        @content;
+      }
+    }
+  
+    @media all and (min-width: map-get($Breakpoints, xl)) {
+      .xl-#{$className} {
+        @content;
+      }
+    }
+  }
+}
+
+// @include generate-responsive-variation(button--primary) {
+//    background-color: $primary-color;
+// }
