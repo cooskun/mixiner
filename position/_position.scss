@@ -1,0 +1,55 @@
+@mixin position($type, $positions, $z: null) {
+  position: $type;
+
+  @if length($positions) == 1 {
+    top: $positions;
+    right: $positions;
+    bottom: $positions;
+    left: $positions;
+  }
+
+  @else if length($positions) == 2 {
+    top: nth($positions, 1);
+    right: nth($positions, 2);
+    bottom: nth($positions, 1);
+    left: nth($positions, 2);
+  }
+
+  @else if length($positions) == 3 {
+    top: nth($positions, 1);
+    right: nth($positions, 2);
+    bottom: nth($positions, 3);
+    left: nth($positions, 2);
+  }
+
+  @else if length($positions) == 4 {
+    top: nth($positions, 1);
+    right: nth($positions, 2);
+    bottom: nth($positions, 3);
+    left: nth($positions, 4);
+  }
+
+  @if $z != null {
+    z-index: $z;
+  }
+}
+
+// Instances
+@mixin absolute($positions, $z) {
+  @include position(absolute, $positions, $z);
+}
+
+@mixin relative($positions, $z) {
+  @include position(relative, $positions, $z);
+}
+
+@mixin sticky($positions, $z) {
+  @include position(sticky, $positions, $z);
+}
+
+// @include position(type, positions, z-index)
+// @include position(absolute, 0)
+// @include position(absolute, 0 10%)
+// @include position(absolute, 0 10% 20%)
+// @include position(absolute, 0 10% 20% 30%)
+// @include position(absolute, 0 10% 20% 30%, 1)
