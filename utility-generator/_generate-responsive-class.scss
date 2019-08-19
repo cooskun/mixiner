@@ -1,6 +1,6 @@
 @import '../settings/breakpoints';
 
-@mixin generate-responsive-variation($className) {
+@mixin generate-responsive-class($className) {
   @at-root {
     .#{$className} {
       @content;
@@ -32,6 +32,6 @@
   }
 }
 
-// @include generate-responsive-variation(button--primary) {
+// @include generate-responsive-class(button--primary) {
 //    background-color: $primary-color;
 // }
