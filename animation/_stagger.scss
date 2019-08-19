@@ -1,0 +1,11 @@
+@mixin stagger($delay, $repeat: 20) {
+  @for $i from 1 through $repeat {
+    @at-root & {
+      &:nth-of-type(#{$i}) {
+        animation-delay: ($delay) * $i;
+      }
+    }
+  }
+}
+
+// @include stagger(.1s, 10)

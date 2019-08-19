@@ -1,0 +1,21 @@
+@mixin keyframes($animatonName, $frames, $prop, $values) {
+  $i : 0;
+
+  @at-root {
+    @keyframes #{$animatonName} {
+      @each $frame in $frames {
+        $i: $i + 1;
+
+        #{$frame}#{'%'} {
+          $value : nth($values, $i);
+
+          @if $value != null {
+            #{$prop}: #{$value};      
+          }
+        }    
+      }
+    }
+  }  
+}
+
+// @include keyframes(flash, 0 50 10, opacity, 1 0 1)

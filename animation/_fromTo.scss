@@ -1,0 +1,19 @@
+@mixin fromTo($animationName, $from, $to) {
+  @at-root {
+    @keyframes #{$animationName} {
+      from {
+        @each $prop, $value in $from {
+          #{$prop}: #{$value};
+        }
+      }
+      to {
+        @each $prop, $value in $to {
+          #{$prop}: #{$value};
+        }
+      }
+    }
+  }
+}
+
+// @include fromTo(fade, (opacity:0), (opacity:1))
+// @include fromTo(scale, (transfrom : scale(0), (transform : scale(1))
