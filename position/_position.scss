@@ -35,16 +35,16 @@
 }
 
 // Instances
-@mixin absolute($positions, $z) {
+@mixin absolute($positions, $z: null) {
   @include position(absolute, $positions, $z);
 }
 
-@mixin relative($positions, $z) {
+@mixin relative($positions, $z: null) {
   @include position(relative, $positions, $z);
 }
 
-@mixin sticky($positions, $z) {
-  @include position(sticky, $positions, $z);
+@mixin sticky($top, $z: null) {
+  @include position(sticky, $top null null, $z);
 }
 
 // @include position(type, positions, z-index)
