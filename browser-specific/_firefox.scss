@@ -1,0 +1,10 @@
+@mixin firefox($url, $method: url-prefix) {
+  @-moz-document #{$method}($url) {
+    @content;
+  }  
+}
+
+// @include firefox();
+// @include firefox(https://url.com, url)
+// @include firefox(https://urlstartswith.com/, url-prefix)
+// @include firefox(domain.com, domain)
