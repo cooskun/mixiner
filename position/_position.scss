@@ -1,55 +1,38 @@
-@mixin position($type, $positions, $z: null) {
+@mixin position($type, $positions, $values, $z: null) {
   position: $type;
+  z-index: $z;
 
-  @if length($positions) == 1 {
-    top: $positions;
-    right: $positions;
-    bottom: $positions;
-    left: $positions;
-  }
+  $index: 1 !default;
 
-  @else if length($positions) == 2 {
-    top: nth($positions, 1);
-    right: nth($positions, 2);
-    bottom: nth($positions, 1);
-    left: nth($positions, 2);
-  }
+  @each $position in $positions {
+    #{$position}: nth($values, $index);
 
-  @else if length($positions) == 3 {
-    top: nth($positions, 1);
-    right: nth($positions, 2);
-    bottom: nth($positions, 3);
-    left: nth($positions, 2);
-  }
-
-  @else if length($positions) == 4 {
-    top: nth($positions, 1);
-    right: nth($positions, 2);
-    bottom: nth($positions, 3);
-    left: nth($positions, 4);
-  }
-
-  @if $z != null {
-    z-index: $z;
-  }
+    @if length($positions) == length($values) {
+      $index: $index + 1;
+    }
+  }  
 }
 
 // Instances
-@mixin absolute($positions, $z: null) {
-  @include position(absolute, $positions, $z);
+@mixin absolute($positions, $values, $z: null) {
+  @include position(absolute, $positions, $values, $z);
 }
 
-@mixin relative($positions, $z: null) {
-  @include position(relative, $positions, $z);
+@mixin relative($positions, $values, $z: null) {
+  @include position(relative, $positions, $values, $z);
 }
 
-@mixin sticky($top, $z: null) {
-  @include position(sticky, $top null null, $z);
+@mixin fixed($positions, $values, $z: null) {
+  @include position(fixed, $positions, $values, $z);
 }
 
-// @include position(type, positions, z-index)
-// @include position(absolute, 0)
-// @include position(absolute, 0 10%)
-// @include position(absolute, 0 10% 20%)
-// @include position(absolute, 0 10% 20% 30%)
-// @include position(absolute, 0 10% 20% 30%, 1)
+@mixin sticky($value, $z: null) {
+  @include position(sticky, top, $value, $z);
+}
+
+// @include position(absolute, top left, 0, 10);
+// @include position(absolute, top left, 0 10%, 10);
+// @include absolute(top left, 0 10%, 10);
+// @include relative(top left, 10% 10%, 10);
+// @include fixed(top left bottom, right, 0 0, 10);
+// @include sticky(10%, 10);
