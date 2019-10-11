@@ -1,0 +1,30 @@
+@mixin debugger($color, $size) {
+  *, *::before, *::after {
+    outline: $size solid $color !important;
+
+    & > *, *::before, *::after {
+      outline: $size solid $color !important;
+
+      & > *, *::before, *::after {
+        outline: $size solid $color !important;
+
+        & > *, *::before, *::after {
+          outline: $size solid $color !important;
+
+          & > *, *::before, *::after {
+            outline: $size solid $color !important;
+
+            & > *, *::before, *::after {
+              outline: $size solid $color !important;
+
+              & > *, *::before, *::after {
+                outline: $size solid $color !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
