@@ -27,7 +27,7 @@
     
     // If value is not underscore, output position
     // Underscore is an escape charachter
-    @if $value != '_' {
+    @if type-of($value) == 'number' {
       #{$position}: $value;
     }
   }
