@@ -35,3 +35,19 @@
   // Output z-index
   z-index: $z;
 }
+
+@mixin absolute($values, $z: null) {
+  @include position(absolute, $values, $z);
+}
+
+@mixin relative($values, $z: null) {
+  @include position(relative, $values, $z);
+}
+
+@mixin fixed($values, $z: null) {
+  @include position(fixed, $values, $z)
+}
+
+@mixin sticky($top, $z: null) {
+  @include position(sticky, $top _ _, $z)
+}
